@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You 💗</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;400i&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg1:#fff1f4;
+  --bg2:#ffe4ec;
+  --card:#ffffffcc;
+  --accent:#e75480;
+  --text:#4b2c35;
+  --soft:#6f4a56;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  height:100vh;
+  background:linear-gradient(180deg,var(--bg1),var(--bg2));
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:Inter,sans-serif;
+  color:var(--text);
+  overflow:hidden;
+}
+
+.card{
+  width:min(92%,480px);
+  padding:52px 42px;
+  border-radius:30px;
+  background:var(--card);
+  backdrop-filter:blur(10px);
+  box-shadow:0 30px 60px rgba(231,84,128,.25);
+  text-align:center;
+  animation:fadeIn 1.2s ease;
+}
+
+h1{
+  font-family:"Playfair Display",serif;
+  font-size:2.5rem;
+  margin-bottom:14px;
+}
+
+p{
+  font-size:1.08rem;
+  line-height:1.7;
+  color:var(--soft);
+  margin-bottom:36px;
+}
+
+.actions{
+  display:flex;
+  justify-content:center;
+  gap:18px;
+}
+
+button{
+  padding:14px 34px;
+  border-radius:999px;
+  font-size:.95rem;
+  cursor:pointer;
+  border:none;
+  transition:.35s ease;
+}
+
+.yes{
+  background:var(--accent);
+  color:white;
+  box-shadow:0 12px 30px rgba(231,84,128,.45);
+}
+
+.yes:hover{
+  transform:translateY(-2px);
+  box-shadow:0 18px 40px rgba(231,84,128,.6);
+}
+
+.no{
+  background:transparent;
+  color:var(--soft);
+  border:1px solid #e6b9c6;
+}
+
+.no:hover{
+  color:var(--text);
+  border-color:var(--accent);
+}
+
+.hidden{display:none}
+
+.celebration h1{
+  font-size:2.7rem;
+}
+
+.celebration p{
+  font-size:1.15rem;
+  color:var(--text);
+}
+
+.petal{
+  position:absolute;
+  top:-40px;
+  font-size:20px;
+  opacity:.6;
+  animation:fall linear infinite;
+}
+
+@keyframes fall{
+  from{transform:translateY(0) rotate(0deg);opacity:0}
+  20%{opacity:.8}
+  to{transform:translateY(110vh) rotate(180deg);opacity:0}
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(30px)}
+  to{opacity:1;transform:none}
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="question">
+  <h1>Will you be my Valentine?</h1>
+  <p>
+    Not because today is special,<br>
+    but because **you** are.
+  </p>
+
+  <div class="actions">
+    <button class="yes" onclick="yes()">Yes</button>
+    <button class="no" onclick="no()">No</button>
+  </div>
+</div>
+
+<div class="card celebration hidden" id="celebration">
+  <h1>You said yes 💗</h1>
+  <p>
+    I don’t promise perfection.<br>
+    I promise honesty, laughter,<br>
+    and choosing you — every day.
+  </p>
+</div>
+
+<script>
+let noCount=0;
+const noLines=[
+  "Are you sure?",
+  "Maybe think again?",
+  "I’ll wait.",
+  "Still no?",
+  "I’m not going anywhere."
+];
+
+function yes(){
+  document.getElementById("question").classList.add("hidden");
+  document.getElementById("celebration").classList.remove("hidden");
+  petals();
+}
+
+function no(){
+  const btn=document.querySelector(".no");
+  btn.textContent=noLines[Math.min(noCount,noLines.length-1)];
+  noCount++;
+
+  // gentle movement
+  const x=(Math.random()*30)-15;
+  btn.style.transform=`translateX(${x}px)`;
+}
+
+function petals(){
+  setInterval(()=>{
+    const p=document.createElement("div");
+    p.className="petal";
+    p.textContent="🌸";
+    p.style.left=Math.random()*100+"vw";
+    p.style.animationDuration=6+Math.random()*5+"s";
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),11000);
+  },400);
+}
+</script>
+
+</body>
+</html>
